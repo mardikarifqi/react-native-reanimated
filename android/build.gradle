@@ -434,6 +434,12 @@ apply plugin: "maven-publish"
 apply plugin: "de.undercouch.download"
 
 android {
+    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+    // Check AGP version for backward compatibility w/react-native versions still on gradle plugin 6
+    if (agpVersion.tokenize('.')[0].toInteger() >= 7) {
+        namespace = "com.swmansion.reanimated"
+    }
+
     compileSdkVersion safeExtGet("compileSdkVersion", 30)
     if (REACT_NATIVE_MINOR_VERSION >= 71) {
         buildFeatures {
